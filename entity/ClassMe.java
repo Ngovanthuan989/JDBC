@@ -16,21 +16,7 @@ public class ClassMe {
     public ClassMe() {
     }
     
-    //dau cai gi
-//    mo hinh 3 lop anh de mo cho e dễ hiểu
-    // lên mạng có hết mà 
-    //có cả demo
-    //a cứ làm cho m ko đc
-    //mang yeu qua thi rut ra doi 30s cam lai xem xem có nhanh hơn ko
-    // em căm mấy lần r:))
-    // anh kiểm tra kết nối máy em xem tn
-    
-    
-    //mang này là ngon r
-    //chắc đg truyền kém ở đâu cx vây mà
-    
-    // anh xem cho em cái jdbc em làm v có đc k
-    // xem có hợp lí không anh
+
     
 
     public ClassMe(String Lecturers, String ClassDescription, String SchoolDay, String ClassTime, int IDClass) {

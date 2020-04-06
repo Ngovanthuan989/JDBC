@@ -23,6 +23,11 @@ public class Score {
         this.ExamSubject = ExamSubject;
     }
 
+    public Score(int a, String b, String c, int d) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
     public int getId() {
         return id;
     }
@@ -54,5 +59,11 @@ public class Score {
     public void setExamSubject(String ExamSubject) {
         this.ExamSubject = ExamSubject;
     }
+
+    @Override
+    public String toString() {
+        return "Score{" + "id=" + id + ", studentID=" + studentID + ", ExamScore=" + ExamScore + ", ExamSubject=" + ExamSubject + '}';
+    }
+    
     
 }

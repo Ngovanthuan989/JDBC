@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import static modelw.StudentModel.DSSV;
+import static modelw.StudentModel.sc;
 import util.Validate;
 
 /**
@@ -93,11 +95,11 @@ public class ScoreModel {
         }
 
     }
-
+        
     public static void updateScore() throws SQLException {
         while (true) {
             ScoreModel sm = new ScoreModel();
-            Score s = new Score();   
+            Score s = new Score();
             String n2;
             int t2 = 0;
             do {
@@ -107,7 +109,7 @@ public class ScoreModel {
                 Pattern pattern = Pattern.compile("\\d*");
                 Matcher matcher = pattern.matcher(n2);
                 if (matcher.matches()) {
-                    s.id = Integer.parseInt(n2);
+                    s.studentID = Integer.parseInt(n2);
                     t2 = 1;
                 } else {
                     System.out.println("Bạn vừa nhập vào không phải số, vui lòng nhập lại !");
@@ -244,7 +246,6 @@ public class ScoreModel {
             }
         }
     }
-
     public void deleteScore(Score sr) throws SQLException {
         PreparedStatement preparedStatement = null;
         Connection connection = JDBCConnection.getJDBCConnection();

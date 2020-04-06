@@ -33,20 +33,48 @@ public class StudentModel {
         while (true) {
             StudentModel sm = new StudentModel();
             Student std = new Student();
-            
-            String n2;
+            String n;
             int t2 = 0;
             do {
-                System.out.print("Nhập mã sinh viên:");
-                n2 = new Validate().checkEmpty();
+                boolean kt = true;
+                System.out.print("Nhap msv:");
+                while (kt) {
 
-                Pattern pattern = Pattern.compile("\\d*");
-                Matcher matcher = pattern.matcher(n2);
-                if (matcher.matches()) {
-                    std.id = Integer.parseInt(n2);
-                    t2 = 1;
+                    n = new Validate().checkEmpty();
+
+                    Pattern pattern = Pattern.compile("\\d*");
+                    Matcher matcher = pattern.matcher(n);
+                    if (matcher.matches()) {
+                        std.id = Integer.parseInt(n);
+                        System.out.println("Đã là số bạn vui lòng nhập lại để check!");
+                        kt = false;
+                    } else {
+                        System.out.println("Bạn vừa nhập vào không phải số, vui lòng nhập lại !");
+                        kt = true;
+                    }
+
+                }
+
+                int b = sc.nextInt();
+
+                DSSV = new StudentModel().selecRecord();
+
+                int check = 0;
+                for (int i = 0; i < DSSV.size(); i++) {
+
+                    if (DSSV.get(i).getId() == b) {
+
+                        check = 1;
+                    }
+
+                }
+
+                if (check == 1) {
+                    System.out.println("Mã sinh viên đã tồn tại .Vui lòng nhập mới");
+
                 } else {
-                    System.out.println("Bạn vừa nhập vào không phải số, vui lòng nhập lại !");
+                    System.out.print("");
+                    t2 = 1;
                 }
             } while (t2 != 1);
             System.out.print("Nhap ten sinh vien:");
@@ -88,20 +116,46 @@ public class StudentModel {
         while (true) {
             StudentModel sm = new StudentModel();
             Student std = new Student();
-            
-            String n2;
+            String n;
             int t2 = 0;
             do {
-                System.out.print("Nhập mã sinh viên:");
-                n2 = new Validate().checkEmpty();
+                boolean kt = true;
+                System.out.println("Nhập mã sinh viên cần sửa:");
+                while (kt) {
 
-                Pattern pattern = Pattern.compile("\\d*");
-                Matcher matcher = pattern.matcher(n2);
-                if (matcher.matches()) {
-                    std.id = Integer.parseInt(n2);
+                    n = new Validate().checkEmpty();
+
+                    Pattern pattern = Pattern.compile("\\d*");
+                    Matcher matcher = pattern.matcher(n);
+                    if (matcher.matches()) {
+                        std.id = Integer.parseInt(n);
+                        System.out.println("Đã là số bạn vui lòng nhập lại để check!");
+                        kt = false;
+                    } else {
+                        System.out.println("Bạn vừa nhập vào không phải số, vui lòng nhập lại !");
+                        kt = true;
+                    }
+
+                }
+                int b = sc.nextInt();
+
+                DSSV = new StudentModel().selecRecord();
+
+                int check = 0;
+                for (int i = 0; i < DSSV.size(); i++) {
+
+                    if (DSSV.get(i).getId() == b) {
+                        check = 1;
+                    }
+
+                }
+
+                if (check == 1) {
+                    System.out.println("Mã sinh viên đã tồn tại!");
                     t2 = 1;
                 } else {
-                    System.out.println("Bạn vừa nhập vào không phải số, vui lòng nhập lại !");
+                    System.out.println("Mã sinh viên không tồn tại.Nhập lại!");
+
                 }
             } while (t2 != 1);
             System.out.print("Sua ten sinh vien:");
@@ -143,9 +197,49 @@ public class StudentModel {
         while (true) {
             StudentModel sm = new StudentModel();
             Student std = new Student();
-            System.out.println("Nhập ID sinh viên cần xóa:");
-            String id = sc.nextLine();
-            std.id = Integer.parseInt(id);
+            String n;
+            int t2 = 0;
+            do {
+                boolean kt = true;
+                System.out.println("Nhập mã sinh viên cần xóa:");
+                while (kt) {
+                 
+
+                    n = new Validate().checkEmpty();
+
+                    Pattern pattern = Pattern.compile("\\d*");
+                    Matcher matcher = pattern.matcher(n);
+                    if (matcher.matches()) {
+                        std.id = Integer.parseInt(n);
+                        System.out.println("Đã là số bạn vui lòng nhập lại để check!");
+                        kt = false;
+                    } else {
+                        System.out.println("Bạn vừa nhập vào không phải số, vui lòng nhập lại !");
+                        kt = true;
+                    }
+
+                }
+                int b = sc.nextInt();
+
+                DSSV = new StudentModel().selecRecord();
+
+                int check = 0;
+                for (int i = 0; i < DSSV.size(); i++) {
+
+                    if (DSSV.get(i).getId() == b) {
+                        check = 1;
+                    }
+
+                }
+
+                if (check == 1) {
+                    System.out.println("Mã sinh viên đã tồn tại!");
+                    t2 = 1;
+                } else {
+                    System.out.println("Mã sinh viên không tồn tại.Nhập lại!");
+
+                }
+            } while (t2 != 1);
             DSSV.add(std);
             sm.deleteRecord(std);
             boolean is_type_wrong = true;
@@ -240,28 +334,67 @@ public class StudentModel {
                 connection.close();
             } catch (SQLException ex) {
             }
+            
 
         }
     }
 
-    public static void selecRecord() throws SQLException {
-//        PreparedStatement preparedStatement = null;
+    public static Student CheckDulicate(int idCheck) throws SQLException {
+
         Connection connection = JDBCConnection.getJDBCConnection();
         Statement stmt = connection.createStatement();
         try {
-            String sql = "SELECT * FROM student;";
+
+            String sql = "select * from student where id = " + idCheck;
             ResultSet rs = stmt.executeQuery(sql);
 
-            System.out.println("=====================================================================================");
-            System.out.println(" Danh sach sinh vien");
-            System.out.printf("| %-10s | %-15s | %-15s | %-15s | %-10s |\n", "MSSV", "Ten SV", "Dia chi", "Ngay sinh",
-                    "GioiTinh");
-            System.out.println("-------------------------------------------------------------------------------------");
             while (rs.next()) {
-                System.out.printf("| %-10s | %-15s | %-15s | %-15s | %-10s |\n", rs.getInt(1) + "  ", rs.getString(2) + "  ", rs.getString(3) + "  ", rs.getString(4) + "  ", rs.getString(5));
 
+                int a = rs.getInt(1);
+
+                String b = rs.getString(2);
+                String c = rs.getString(3);
+                String d = rs.getString(4);
+                String e = rs.getString(5);
+
+                return new Student(a, b, c, d, e);
             }
-            System.out.println("-------------------------------------------------------------------------------------");
+
+        } catch (SQLException ex) {
+            return null;
+        } finally {
+            try {
+
+                connection.close();
+            } catch (SQLException ex) {
+            }
+        }
+        return null;
+    }
+
+    public static ArrayList<Student> selecRecord() throws SQLException {
+
+        Connection connection = JDBCConnection.getJDBCConnection();
+        Statement stmt = connection.createStatement();
+        ArrayList<Student> list = new ArrayList<>();
+
+        try {
+
+            String sql = "SELECT * FROM student;";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+
+                int a = rs.getInt(1);
+
+                String b = rs.getString(2);
+                String c = rs.getString(3);
+                String d = rs.getString(4);
+                String e = rs.getString(5);
+
+                list.add(new Student(a, b, c, d, e));
+            }
+            return list;
+
         } catch (SQLException ex) {
         } finally {
             try {
@@ -270,10 +403,51 @@ public class StudentModel {
             } catch (SQLException ex) {
             }
         }
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//        } 
+
+        return null;
+    }
+
+    public static void display() throws SQLException {
+        DSSV = new StudentModel().selecRecord();
+
+        System.out.println("=====================================================================================");
+        System.out.println(" Danh sach sinh vien");
+        System.out.printf("| %-10s | %-15s | %-15s | %-15s | %-10s |\n", "MSSV", "Ten SV", "Dia chi", "Ngay sinh",
+                "Giới tính");
+        System.out.println("-------------------------------------------------------------------------------------");
+        for (int i = 0; i < DSSV.size(); i++) {
+
+            System.out.printf("| %-10s | %-15s | %-15s | %-15s | %-10s |\n", DSSV.get(i).getId(),
+                    DSSV.get(i).getFullName(), DSSV.get(i).getAddress(), DSSV.get(i).getDob(),
+                    DSSV.get(i).getSex());
+
+        }
+        System.out.println("=====================================================================================");
+    }
+
+//        new StudentModel().display();
+//
+//        System.out.println("Nhap Id cach 2:");
+//        int b = ab.nextInt();
+//        //B1 : laly cai hét cái lít student
+//
+//        DSSV = new StudentModel().selecRecord();
+//
+//        int check = 0;
+//        for (int i = 0; i < DSSV.size(); i++) {
+//
+//            // cai nay kiem tra thoi
+//            if (DSSV.get(i).getId() == b) {
+//                check = 1;
+//            }
 //
 //        }
-    }
+//
+//        if (check == 1) {
+//            System.out.println("ton tai r");
+//        } else {
+//            System.out.println("chua");
+//        }
+//
+//    }
 }

@@ -65,6 +65,15 @@ public class Student {
         this.sex = sex;
     }
 
+    @Override
+    public String toString() {
+        return "Student{" + "id=" + id + ", fullName=" + fullName + ", address=" + address + ", dob=" + dob + ", sex=" + sex + '}';
+    }
+
+
+
+    
+    
     
      
 }

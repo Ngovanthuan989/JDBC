@@ -40,7 +40,7 @@ public class JDBCConnection {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException ex) {
-//            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
